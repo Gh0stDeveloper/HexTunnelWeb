@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
-      NEXT_PUBLIC_SITE_URL: https://hextunnel.example
+      NEXT_PUBLIC_SITE_URL: https://hextunnel.duckdns.org
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,4 +37,5 @@ jobs:
           test -f out/preguntas/index.html
           test -f out/robots.txt
           test -f out/sitemap.xml
+          grep -Fq 'https://hextunnel.duckdns.org' out/sitemap.xml
           ! grep -REni 'ghostdeveloperlicenseserver|telebotgen|127\.0\.0\.1:8080|admin[_ -]?token|private[_ -]?key|sqlite|/etc/ghostdeveloper-license' out --include='*.html'
