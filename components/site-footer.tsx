@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { navigation, siteConfig } from "@/lib/site";
+import { legalNavigation, navigation, productNavigation, siteConfig, supportContacts } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -16,37 +16,40 @@ export function SiteFooter() {
             </span>
           </div>
           <p className="footer-copy">
-            Sitio público informativo. El acceso al producto se entrega únicamente por canales autorizados.
+            Sitio público oficial. El acceso y la asistencia se entregan únicamente mediante los administradores identificados.
           </p>
         </div>
 
         <div>
-          <h2>Explorar</h2>
+          <h2>Producto</h2>
           <ul>
-            {navigation.slice(1).map((item) => (
-              <li key={item.href}>
-                <Link href={item.href}>{item.label}</Link>
-              </li>
+            {productNavigation.map((item) => (
+              <li key={item.href}><Link href={item.href}>{item.label}</Link></li>
             ))}
           </ul>
         </div>
 
         <div>
-          <h2>Contacto</h2>
+          <h2>Recursos</h2>
           <ul>
-            <li>
-              <a href={siteConfig.supportUrl} rel="noreferrer" target="_blank">
-                Telegram
-              </a>
-            </li>
-            <li>
-              <a href={siteConfig.githubUrl} rel="noreferrer" target="_blank">
-                GitHub
-              </a>
-            </li>
-            <li>
-              <Link href="/privacidad/">Privacidad</Link>
-            </li>
+            {navigation.slice(2).map((item) => (
+              <li key={item.href}><Link href={item.href}>{item.label}</Link></li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2>Legal y contacto</h2>
+          <ul>
+            {legalNavigation.map((item) => (
+              <li key={item.href}><Link href={item.href}>{item.label}</Link></li>
+            ))}
+            {supportContacts.map((contact) => (
+              <li key={contact.telegramUrl}>
+                <a href={contact.telegramUrl} rel="noreferrer" target="_blank">Telegram · {contact.name}</a>
+              </li>
+            ))}
+            <li><a href={siteConfig.githubUrl} rel="noreferrer" target="_blank">GitHub</a></li>
           </ul>
         </div>
       </div>

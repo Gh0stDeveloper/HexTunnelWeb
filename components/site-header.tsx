@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { navigation, siteConfig } from "@/lib/site";
+import { navigation, siteConfig, supportContacts } from "@/lib/site";
 
 export function SiteHeader() {
+  const primarySupport = supportContacts[0];
+
   return (
     <header className="site-header">
       <div className="container nav-shell">
-        <Link className="brand" href="/" aria-label="Hex Tunnel, inicio">
+        <Link className="brand" href="/">
           <span className="brand-mark" aria-hidden="true">
             {siteConfig.shortName}
           </span>
@@ -23,7 +25,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <a className="button button-small" href={siteConfig.supportUrl} rel="noreferrer" target="_blank">
+        <a className="button button-small" href={primarySupport.telegramUrl} rel="noreferrer" target="_blank">
           Contactar
         </a>
 
@@ -35,7 +37,7 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <a href={siteConfig.supportUrl} rel="noreferrer" target="_blank">
+            <a href={primarySupport.telegramUrl} rel="noreferrer" target="_blank">
               Contactar soporte
             </a>
           </nav>
