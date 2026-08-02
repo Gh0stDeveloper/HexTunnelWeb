@@ -7,6 +7,7 @@ import { StructuredData } from "@/components/structured-data";
 import { siteConfig, supportContacts } from "@/lib/site";
 import "./globals.css";
 import "./professional.css";
+import "./performance-fixes.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
