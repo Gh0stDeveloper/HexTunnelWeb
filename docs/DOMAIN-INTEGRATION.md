@@ -36,7 +36,7 @@ El script `scripts/deploy-vps.sh` crea releases versionadas, cambia el enlace `c
 
 ```bash
 sudo apt update
-sudo apt install -y git nginx rsync curl ca-certificates
+sudo apt install -y git nginx rsync curl ca-certificates dnsutils
 sudo git clone https://github.com/Gh0stDeveloper/HexTunnelWeb.git /opt/hextunnel-web/source
 cd /opt/hextunnel-web/source
 sudo bash scripts/deploy-vps.sh
@@ -50,7 +50,7 @@ Node.js 22 y npm deben estar instalados antes de ejecutar el script.
 
 ## Certificado TLS
 
-Antes de solicitar el certificado, comprueba que el dominio ya responde desde resolutores públicos:
+Antes de solicitar el certificado, comprueba que el dominio ya responda desde resolutores públicos:
 
 ```bash
 dig +short A hextunnel.duckdns.org @1.1.1.1
@@ -59,11 +59,7 @@ dig +short A hextunnel.duckdns.org @8.8.8.8
 
 Ambos comandos deben devolver la IP pública de la VPS. Los puertos TCP 80 y 443 también deben estar disponibles.
 
-Con Nginx configurado, Certbot puede emitir e instalar el certificado para:
-
-```text
-hextunnel.duckdns.org
-```
+Con Nginx configurado, Certbot puede emitir e instalar el certificado para `hextunnel.duckdns.org`.
 
 El certificado del dominio público es independiente de los certificados usados por los demás dominios de la VPS.
 
