@@ -31,6 +31,9 @@ jobs:
         run: |
           set -Eeuo pipefail
           bash -n scripts/deploy-vps.sh
+          bash -n scripts/install-nginx-vhost.sh
+          grep -Fq '/etc/nginx/sites-enabled' scripts/install-nginx-vhost.sh
+          grep -Fq '/etc/nginx/conf.d' scripts/install-nginx-vhost.sh
           grep -Fq 'server_name hextunnel.duckdns.org;' deploy/nginx/hextunnel.duckdns.org.conf
           grep -Fq '/var/www/hextunnel-web/current' deploy/nginx/hextunnel.duckdns.org.conf
       - name: Validate static export
