@@ -1,7 +1,3 @@
-"use client";
-
-import { useState } from "react";
-
 type MediaImageProps = {
   src: string;
   fallbackSrc?: string;
@@ -19,20 +15,22 @@ export function MediaImage({
   width = 1600,
   height = 1000,
 }: MediaImageProps) {
-  const [currentSrc, setCurrentSrc] = useState(src);
-
   return (
-    <img
-      src={currentSrc}
-      alt={alt}
-      className={className}
-      width={width}
-      height={height}
-      loading="lazy"
-      decoding="async"
-      onError={() => {
-        if (currentSrc !== fallbackSrc) setCurrentSrc(fallbackSrc);
-      }}
-    />
+    <object
+      data={src}
+      type="image/webp"
+      className={["media-image", className].filter(Boolean).join(" ")}
+      aria-label={alt}
+      style={{ aspectRatio: `${width} / ${height}` }}
+    >
+      <img
+        src={fallbackSrc}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+      />
+    </object>
   );
 }
