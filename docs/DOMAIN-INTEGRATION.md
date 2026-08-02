@@ -49,7 +49,7 @@ El certificado del dominio público es independiente de los certificados usados 
 Después de fusionar una actualización en `main`, se vuelve a desplegar con:
 
 ```bash
-sudo /opt/hextunnel-web/source/scripts/deploy-vps.sh
+sudo bash /opt/hextunnel-web/source/scripts/deploy-vps.sh
 ```
 
 También puede ejecutarse desde un clon temporal usando la URL raw del script, pero conservar un clon local facilita auditoría y rollback.
