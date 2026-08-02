@@ -32,6 +32,22 @@ deploy/nginx/hextunnel.duckdns.org.conf
 
 El script `scripts/deploy-vps.sh` crea releases versionadas, cambia el enlace `current` de forma atómica y conserva las cinco releases más recientes.
 
+## Primera instalación
+
+```bash
+sudo apt update
+sudo apt install -y git nginx rsync curl ca-certificates
+sudo git clone https://github.com/Gh0stDeveloper/HexTunnelWeb.git /opt/hextunnel-web/source
+cd /opt/hextunnel-web/source
+sudo bash scripts/deploy-vps.sh
+sudo cp deploy/nginx/hextunnel.duckdns.org.conf /etc/nginx/sites-available/hextunnel.duckdns.org
+sudo ln -sfn /etc/nginx/sites-available/hextunnel.duckdns.org /etc/nginx/sites-enabled/hextunnel.duckdns.org
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+Node.js 22 y npm deben estar instalados antes de ejecutar el script.
+
 ## Certificado TLS
 
 Antes de solicitar el certificado, el dominio debe resolver hacia la IP pública de la VPS y los puertos TCP 80 y 443 deben estar disponibles.
@@ -51,8 +67,6 @@ Después de fusionar una actualización en `main`, se vuelve a desplegar con:
 ```bash
 sudo bash /opt/hextunnel-web/source/scripts/deploy-vps.sh
 ```
-
-También puede ejecutarse desde un clon temporal usando la URL raw del script, pero conservar un clon local facilita auditoría y rollback.
 
 ## Regla de contenido
 
