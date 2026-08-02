@@ -2,6 +2,12 @@
 
 Sitio público oficial de Hex Tunnel, construido con Next.js App Router y TypeScript.
 
+## Sitio oficial
+
+```text
+https://hextunnel.duckdns.org
+```
+
 ## Alcance
 
 Este repositorio contiene únicamente contenido público:
@@ -31,18 +37,22 @@ npm run build
 
 La compilación utiliza `output: "export"` y genera el sitio estático en `out/`.
 
-## Dominio
-
-Configura la URL pública durante el build:
+## Build de producción
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://nuevo-dominio.example npm run build
+NEXT_PUBLIC_SITE_URL=https://hextunnel.duckdns.org npm run build
 ```
 
-El endpoint histórico del instalador debe conservarse sin cambios:
+## Despliegue en VPS
+
+El repositorio incluye:
+
+- `scripts/deploy-vps.sh`: build y despliegue versionado;
+- `deploy/nginx/hextunnel.duckdns.org.conf`: server block inicial para Nginx;
+- `docs/DOMAIN-INTEGRATION.md`: separación entre el sitio público y el instalador.
+
+El endpoint histórico del instalador permanece sin cambios:
 
 ```text
 https://ghostdeveloper.duckdns.org/install.sh
 ```
-
-Consulta [`docs/DOMAIN-INTEGRATION.md`](docs/DOMAIN-INTEGRATION.md).
