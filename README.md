@@ -51,6 +51,12 @@ El repositorio incluye:
 - `deploy/nginx/hextunnel.duckdns.org.conf`: server block inicial para Nginx;
 - `docs/DOMAIN-INTEGRATION.md`: separación entre el sitio público y el instalador.
 
+Primera instalación y actualizaciones:
+
+```bash
+sudo bash scripts/deploy-vps.sh
+```
+
 El endpoint histórico del instalador permanece sin cambios:
 
 ```text
