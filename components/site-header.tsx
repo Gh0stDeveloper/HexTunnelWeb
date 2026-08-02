@@ -7,7 +7,7 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="container nav-shell">
-        <Link className="brand" href="/" aria-label="Hex Tunnel, inicio">
+        <Link className="brand" href="/">
           <span className="brand-mark" aria-hidden="true">
             {siteConfig.shortName}
           </span>
