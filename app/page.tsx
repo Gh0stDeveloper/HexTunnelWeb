@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MediaImage } from "@/components/media-image";
 import { SectionHeading } from "@/components/section-heading";
 import {
   ArrowRightIcon,
@@ -11,7 +12,7 @@ import {
   TerminalIcon,
   UsersIcon,
 } from "@/components/icons";
-import { publicCapabilities, siteConfig } from "@/lib/site";
+import { publicCapabilities, siteConfig, supportContacts } from "@/lib/site";
 
 const benefits = [
   {
@@ -49,7 +50,33 @@ const workflow = [
   },
 ];
 
+const professionalResources = [
+  {
+    kicker: "Centro oficial",
+    title: "Documentación pública",
+    copy: "Requisitos, preparación de VPS, arquitecturas, actualizaciones, respaldos y solución de problemas.",
+    href: "/documentacion/",
+    label: "Abrir documentación",
+  },
+  {
+    kicker: "Transparencia",
+    title: "Novedades y versiones",
+    copy: "Cambios públicos, compatibilidad y notas de versión sin exponer infraestructura interna.",
+    href: "/novedades/",
+    label: "Consultar novedades",
+  },
+  {
+    kicker: "Confianza",
+    title: "Seguridad y uso responsable",
+    copy: "Canal de reporte, términos, privacidad y política de uso aceptable.",
+    href: "/seguridad/",
+    label: "Revisar seguridad",
+  },
+] as const;
+
 export default function HomePage() {
+  const primarySupport = supportContacts[0];
+
   return (
     <>
       <section className="hero section-pad">
@@ -71,9 +98,9 @@ export default function HomePage() {
               <Link className="button" href="/caracteristicas/">
                 Explorar características <ArrowRightIcon />
               </Link>
-              <a className="button button-secondary" href={siteConfig.supportUrl} rel="noreferrer" target="_blank">
-                Solicitar información
-              </a>
+              <Link className="button button-secondary" href="/documentacion/">
+                Ver documentación
+              </Link>
             </div>
             <div className="hero-trust">
               <span><CheckIcon /> Debian 12</span>
@@ -194,17 +221,66 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="section-pad panel-section home-professional-section">
+        <div className="container">
+          <SectionHeading
+            eyebrow="Producto verificable"
+            title="Documentación, novedades y políticas en un solo sitio"
+            description="La web pública distingue claramente la información del producto, los contactos oficiales y las reglas de uso."
+          />
+          <div className="home-resource-grid">
+            {professionalResources.map((resource) => (
+              <article className="resource-card" key={resource.href}>
+                <p className="card-kicker">{resource.kicker}</p>
+                <h3>{resource.title}</h3>
+                <p>{resource.copy}</p>
+                <Link className="text-link" href={resource.href}>{resource.label} →</Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-pad container">
+        <SectionHeading
+          eyebrow="Galería"
+          title="Capturas reales cuando estén disponibles"
+          description="La página ya reconoce los nombres definitivos de los archivos. Mientras no se suban, muestra recursos de sustitución sin romper el diseño."
+        />
+        <div className="home-media-preview">
+          <article className="media-card">
+            <div className="media-frame">
+              <MediaImage src="/media/screenshot-panel-general.webp" alt="Panel general de Hex Tunnel" />
+            </div>
+            <div className="media-card-content"><h3>Panel general</h3><p>Vista pública sanitizada del menú principal.</p></div>
+          </article>
+          <article className="media-card">
+            <div className="media-frame">
+              <MediaImage src="/media/screenshot-servicios.webp" alt="Servicios de Hex Tunnel" />
+            </div>
+            <div className="media-card-content"><h3>Servicios</h3><p>Componentes modulares y estado operativo.</p></div>
+          </article>
+          <article className="media-card">
+            <div className="media-frame">
+              <MediaImage src="/media/screenshot-diagnostico.webp" alt="Diagnóstico de Hex Tunnel" />
+            </div>
+            <div className="media-card-content"><h3>Diagnóstico</h3><p>Información sanitizada para revisión del sistema.</p></div>
+          </article>
+        </div>
+        <p><Link className="text-link" href="/galeria/">Abrir galería completa →</Link></p>
+      </section>
+
       <section className="section-pad container">
         <div className="cta-card">
           <div>
             <p className="eyebrow">Información y acceso</p>
-            <h2>Conoce la compatibilidad antes de preparar tu servidor.</h2>
-            <p>Consulta plataformas admitidas, diferencias por arquitectura y recomendaciones de instalación.</p>
+            <h2>Dos administradores oficiales para asistencia.</h2>
+            <p>Si uno no está disponible, consulta la página de soporte para contactar al segundo administrador.</p>
           </div>
           <div className="cta-actions">
-            <Link className="button" href="/compatibilidad/">Ver compatibilidad</Link>
-            <a className="button button-secondary" href={siteConfig.supportUrl} rel="noreferrer" target="_blank">
-              Contactar soporte
+            <Link className="button" href="/soporte/">Ver soporte oficial</Link>
+            <a className="button button-secondary" href={primarySupport.telegramUrl} rel="noreferrer" target="_blank">
+              Contactar a {primarySupport.name}
             </a>
           </div>
         </div>
