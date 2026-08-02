@@ -50,7 +50,14 @@ Node.js 22 y npm deben estar instalados antes de ejecutar el script.
 
 ## Certificado TLS
 
-Antes de solicitar el certificado, el dominio debe resolver hacia la IP pública de la VPS y los puertos TCP 80 y 443 deben estar disponibles.
+Antes de solicitar el certificado, comprueba que el dominio ya responde desde resolutores públicos:
+
+```bash
+dig +short A hextunnel.duckdns.org @1.1.1.1
+dig +short A hextunnel.duckdns.org @8.8.8.8
+```
+
+Ambos comandos deben devolver la IP pública de la VPS. Los puertos TCP 80 y 443 también deben estar disponibles.
 
 Con Nginx configurado, Certbot puede emitir e instalar el certificado para:
 
