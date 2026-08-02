@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/site";
+import Link from "next/link";
+import { StructuredData } from "@/components/structured-data";
 
 export const metadata: Metadata = {
   title: "Preguntas frecuentes",
@@ -13,10 +14,10 @@ const faqs = [
   ["¿Funciona en ARM64?", "Sí. La plataforma admite AMD64 y ARM64. Algunos módulos heredados pueden tener disponibilidad diferente según la arquitectura."],
   ["¿Puedo instalarlo junto con otros paneles?", "No es recomendable. Otros paneles pueden modificar puertos, firewall y servicios utilizados por Hex Tunnel."],
   ["¿La página web solicita credenciales?", "No. Este sitio es únicamente informativo y no solicita contraseñas, claves de servidor ni datos de acceso."],
-  ["¿Dónde obtengo las instrucciones de instalación?", "Las instrucciones y el acceso se entregan únicamente mediante los canales autorizados de soporte."],
-  ["¿Se puede actualizar sin reinstalar todo?", "La plataforma incluye un flujo de actualización para componentes mantenidos, sujeto a la versión instalada y la compatibilidad del servidor."],
-  ["¿Cuenta con recuperación ante errores?", "Sí. Las operaciones principales incluyen respaldos, validaciones y mecanismos de rollback cuando corresponda."],
-  ["¿Cómo recibo soporte?", "El soporte público se coordina mediante el canal oficial de Telegram indicado en esta página."],
+  ["¿Dónde obtengo las instrucciones de instalación?", "Las instrucciones y el acceso se entregan únicamente mediante los administradores publicados en la página de soporte."],
+  ["¿Se puede actualizar sin reinstalar todo?", "La plataforma incluye flujos de actualización para componentes mantenidos, sujetos a la versión instalada y la compatibilidad del servidor."],
+  ["¿Cuenta con recuperación ante errores?", "Sí. Las operaciones principales incluyen respaldos, validaciones y mecanismos de rollback cuando corresponde."],
+  ["¿Quién ofrece soporte?", "El soporte público puede solicitarse a Gh0stDeveloper o Jotchua DevzZ mediante los enlaces oficiales publicados en este sitio."],
 ] as const;
 
 export default function FaqPage() {
@@ -41,10 +42,25 @@ export default function FaqPage() {
 
       <section className="section-pad container">
         <div className="cta-card compact-cta">
-          <div><h2>¿Necesitas información adicional?</h2><p>Utiliza únicamente el canal oficial para consultar disponibilidad y acceso.</p></div>
-          <a className="button" href={siteConfig.supportUrl} rel="noreferrer" target="_blank">Contactar soporte</a>
+          <div><h2>¿Necesitas información adicional?</h2><p>Consulta la documentación o utiliza uno de los dos canales oficiales de soporte.</p></div>
+          <div className="cta-actions">
+            <Link className="button button-secondary" href="/documentacion/">Documentación</Link>
+            <Link className="button" href="/soporte/">Contactar soporte</Link>
+          </div>
         </div>
       </section>
+
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map(([question, answer]) => ({
+            "@type": "Question",
+            name: question,
+            acceptedAnswer: { "@type": "Answer", text: answer },
+          })),
+        }}
+      />
     </>
   );
 }
