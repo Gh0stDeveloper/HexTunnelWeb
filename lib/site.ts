@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: "HX",
   description:
     "Plataforma modular para instalar, administrar y mantener servicios de conexión en servidores VPS compatibles.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://hextunnel.example",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://hextunnel.duckdns.org",
   supportUrl: "https://t.me/Gh0stDeveloper",
   githubUrl: "https://github.com/Gh0stDeveloper",
   version: "1.0.0-rc.3",
