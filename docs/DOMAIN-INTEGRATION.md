@@ -1,68 +1,66 @@
 # Integración de dominios
 
-## Objetivo
+## Arquitectura pública
 
-Separar la presentación pública de Hex Tunnel del endpoint histórico utilizado para entregar el instalador.
-
-## Contrato que no debe romperse
-
-El endpoint siguiente debe continuar disponible sin redirecciones ni cambios de contenido:
+La presentación oficial de Hex Tunnel utiliza un dominio independiente:
 
 ```text
-https://ghostdeveloper.duckdns.org/install.sh
+https://hextunnel.duckdns.org/ -> sitio público HexTunnelWeb
 ```
 
-Las integraciones y las instrucciones existentes dependen de esa URL. El nuevo sitio no debe reemplazarla.
-
-## Nuevo dominio público
-
-El dominio nuevo debe apuntar exclusivamente a `HexTunnelWeb`.
-
-Ejemplo conceptual:
+El endpoint histórico del instalador permanece en el dominio anterior y no debe redirigirse ni reemplazarse:
 
 ```text
-https://hextunnel.example/        -> sitio Next.js estático
 https://ghostdeveloper.duckdns.org/install.sh -> instalador existente
 ```
 
-## Alternativa A: Vercel
+Esta separación permite actualizar el sitio público sin afectar la instalación enviada a los usuarios.
 
-1. Importar `Gh0stDeveloper/HexTunnelWeb` en Vercel.
-2. Configurar `NEXT_PUBLIC_SITE_URL` con el dominio definitivo.
-3. Añadir el dominio nuevo al proyecto.
-4. Mantener el dominio anterior y su configuración Nginx sin cambios.
+## Despliegue en Nginx
 
-## Alternativa B: Nginx en una VPS
+El build estático se publica en:
 
-Ejecutar `npm run build` y publicar el directorio `out/` en un server block independiente.
-
-```nginx
-server {
-    listen 80;
-    server_name NUEVO_DOMINIO;
-
-    root /var/www/hextunnel-web/out;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ $uri.html =404;
-    }
-
-    error_page 404 /404.html;
-}
+```text
+/var/www/hextunnel-web/current
 ```
 
-El server block de `ghostdeveloper.duckdns.org` debe conservar su ruta específica para `/install.sh`.
+La plantilla de Nginx se encuentra en:
+
+```text
+deploy/nginx/hextunnel.duckdns.org.conf
+```
+
+El script `scripts/deploy-vps.sh` crea releases versionadas, cambia el enlace `current` de forma atómica y conserva las cinco releases más recientes.
+
+## Certificado TLS
+
+Antes de solicitar el certificado, el dominio debe resolver hacia la IP pública de la VPS y los puertos TCP 80 y 443 deben estar disponibles.
+
+Con Nginx configurado, Certbot puede emitir e instalar el certificado para:
+
+```text
+hextunnel.duckdns.org
+```
+
+El certificado del dominio público es independiente de los certificados usados por los demás dominios de la VPS.
+
+## Actualizaciones futuras
+
+Después de fusionar una actualización en `main`, se vuelve a desplegar con:
+
+```bash
+sudo /opt/hextunnel-web/source/scripts/deploy-vps.sh
+```
+
+También puede ejecutarse desde un clon temporal usando la URL raw del script, pero conservar un clon local facilita auditoría y rollback.
 
 ## Regla de contenido
 
 El sitio público no debe incluir:
 
-- credenciales;
-- tokens;
-- detalles de API;
-- estructura de bases de datos;
+- credenciales o tokens;
+- detalles de API o bases de datos;
 - procesos administrativos;
 - rutas privadas;
 - datos de servicios internos;
-- información interna del servidor.
+- información operativa del servidor.
