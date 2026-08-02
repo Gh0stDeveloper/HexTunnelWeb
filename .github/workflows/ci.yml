@@ -1,0 +1,40 @@
+name: Web CI
+
+on:
+  push:
+    branches: [main, "agent/**", "feat/**", "fix/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEXT_PUBLIC_SITE_URL: https://hextunnel.example
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Validate static export
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          test -f out/index.html
+          test -f out/caracteristicas/index.html
+          test -f out/compatibilidad/index.html
+          test -f out/desarrolladores/index.html
+          test -f out/preguntas/index.html
+          test -f out/robots.txt
+          test -f out/sitemap.xml
+          ! grep -REni 'ghostdeveloperlicenseserver|telebotgen|127\.0\.0\.1:8080|admin[_ -]?token|private[_ -]?key|sqlite|/etc/ghostdeveloper-license' out --include='*.html'

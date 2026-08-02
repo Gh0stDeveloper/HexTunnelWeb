@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Hex Tunnel</title>
+  <defs>
+    <linearGradient id="g" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#79a7ff"/>
+      <stop offset="1" stop-color="#52e5d4"/>
+    </linearGradient>
+  </defs>
+  <rect x="3" y="3" width="58" height="58" rx="18" fill="#0a1520" stroke="#24384a" stroke-width="2"/>
+  <path d="M18 18v28M46 18v28M18 32h28" stroke="url(#g)" stroke-width="6" stroke-linecap="round"/>
+</svg>
