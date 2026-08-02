@@ -57,6 +57,8 @@ Primera instalación y actualizaciones:
 sudo bash scripts/deploy-vps.sh
 ```
 
+Antes de emitir el certificado TLS, comprueba que `hextunnel.duckdns.org` resuelva públicamente hacia la IP de la VPS.
+
 El endpoint histórico del instalador permanece sin cambios:
 
 ```text
